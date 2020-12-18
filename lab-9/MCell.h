@@ -1,5 +1,5 @@
-#ifndef MCell_H
-#define MCell_H
+#ifndef MCELL_H
+#define MCELL_H
 
 class MCell
 {

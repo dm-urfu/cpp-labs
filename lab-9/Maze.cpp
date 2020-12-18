@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <map>
 #include "Maze.h"
 
 using namespace std;
@@ -87,30 +86,30 @@ void Maze::printMaze() {
 			if (hasConnection(i, j, i, j - 1))
 				left = true;
 
-			if (up && right && down && left)
-				cout << (char) 197;
-			else if (up && right)
-				cout << (char) 192;
-			else if (right && down)
-				cout << (char) 218;
-			else if (left && down)
-				cout << (char) 191;
-			else if (up && down)
-				cout << (char) 179;
-			else if (left && right)
-				cout << (char) 196;
-			else if (up && right && left)
-				cout << (char) 193;
+			if (up && left && right)
+				cout << (char)193;
+			else if (down && right && left)
+				cout << (char)194;
+			else if (up && down && right)
+				cout << (char)195;
 			else if (up && down && left)
-				cout << (char) 180;
-			else if (left && right && down)
-				cout << (char) 194;
-			else if (up && right && down)
-				cout << (char) 195;
+				cout << (char)180;
+			else if (up && down)
+				cout << (char)179;
+			else if (left && down)
+				cout << (char)191;
+			else if (up && right)
+				cout << (char)192;
+			else if (left && right)
+				cout << (char)196;
 			else if (left && up)
-				cout << (char) 217;
+				cout << (char)217;
+			else if (right && down)
+				cout << (char)218;
+			else if (left && right && up && down)
+				cout << (char)197; 
 			else
-				cout << (char) 48;
+				cout << (char)48;
 
 			left = false;
 			up = false;
