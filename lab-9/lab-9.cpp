@@ -4,25 +4,8 @@
 
 using namespace std;
 
-int main()
+void printTreeWeights(MTreeNode* tree)
 {
-	Maze* maze = new Maze(5, 5);
-	MTreeNode* tree = MTreeNode::beginTree(0, 0);
-
-	for (int i = 0; i < 5 - 1; i++)
-	{
-		for (int j = 0; j < 5 - i - 1; j++)
-		{
-			maze->makeConnection(i, i + j, i, i + j + 1);
-			maze->makeConnection(i + j, i, i + j + 1, i);
-		}
-		maze->makeConnection(i, i + 1, i + 1, i + 1);
-	}
-
-	maze->removeConnection(0, 0, 0, 1);
-	maze->printMaze();
-	cout << endl;
-
 	int weights[6][6];
 	auto iterate = tree;
 	for (int i = 0; i < 5; i++) {
@@ -56,4 +39,26 @@ int main()
 		}
 		cout << endl;
 	}
+}
+
+int main()
+{
+	Maze* maze = new Maze(5, 5);
+	MTreeNode* tree = MTreeNode::beginTree(0, 0);
+
+	for (int i = 0; i < 5 - 1; i++)
+	{
+		for (int j = 0; j < 5 - i - 1; j++)
+		{
+			maze->makeConnection(i, i + j, i, i + j + 1);
+			maze->makeConnection(i + j, i, i + j + 1, i);
+		}
+		maze->makeConnection(i, i + 1, i + 1, i + 1);
+	}
+
+	maze->removeConnection(0, 0, 0, 1);
+	maze->printMaze();
+	cout << endl;
+
+	printTreeWeights(tree);
 }
