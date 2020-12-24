@@ -1,71 +1,63 @@
-#include <iostream>
-#include <algorithm>
 #include "Maze.h"
+#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
+int Maze::width() const
+{
+	return m_n;
+}
+
+int Maze::height() const
+{
+	return m_m;
+}
+
 Maze::Maze(int n, int m)
 {
-	width = n;
-	height = m;
+	m_m = m;
+	m_n = n;
 	m_field = new MCell[n * m];
+}
+
+Maze::~Maze()
+{
+	for (int i = 0; i < m_m * m_n; i++)
+		delete& m_field[i];
+	delete[] m_field;
 }
 
 const MCell& Maze::cell(int i, int j) const
 {
-	return m_field[i * width + j];
+	return m_field[i * m_n + j];
 }
 
 bool Maze::hasConnection(int i1, int j1, int i2, int j2)
 {
-	if (((abs(i1 - i2) + abs(j1 - j2)) != 1) || i1 < 0 || i2 < 0 || j1 < 0 || j2 < 0)
-		return false;
-
-	MCell cell;
-	if (i1 != i2)
-	{
-		if (i1 > i2)
-			cell = this->cell(i2, j2);
-		else
-			cell = this->cell(i1, j1);
-		return cell.down();
-	}
+	if (i1 == i2)
+		return m_field[i1 * m_n + min(j1, j2)].right();
 	else
-	{
-		if (j1 > j2)
-			cell = this->cell(i2, j2);
-		else
-			cell = this->cell(i1, j1);
-		return cell.right();
-	}
+		return m_field[min(i1, i2) * m_n + j1].down();
 }
 
 bool Maze::makeConnection(int i1, int j1, int i2, int j2)
 {
-	if (i1 != i2 && j1 != j2 || ((abs(i1 - i2) + abs(j1 - j2)) != 1))
-		return false;
-
 	if (i1 == i2)
-		m_field[i1 * width + min(j1, j2)].m_right = true;
+		m_field[i1 * m_n + min(j1, j2)].m_right = true;
 	else
-		m_field[min(i1, i2) * width + j1].m_down = true;
-		
+		m_field[min(i1, i2) * m_n + j1].m_down = true;
 	return true;
 }
 
 bool Maze::removeConnection(int i1, int j1, int i2, int j2)
 {
-	if (i1 != i2 && j1 != j2 || ((abs(i1 - i2) + abs(j1 - j2)) != 1))
-		return false;
-
 	if (i1 == i2)
-		m_field[i1 * width + min(j1, j2)].m_right = false;
+		m_field[i1 * m_n + min(j1, j2)].m_right = false;
 	else
-		m_field[min(i1, i2) * width + j1].m_down = false;
-
+		m_field[min(i1, i2) * m_n + j1].m_down = false;
 	return true;
 }
-
 
 void Maze::printMaze() {
 	bool up = false;
@@ -73,9 +65,9 @@ void Maze::printMaze() {
 	bool down = false;
 	bool left = false;
 
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < m_n; i++)
 	{
-		for (int j = 0; j < height; j++)
+		for (int j = 0; j < m_m; j++)
 		{
 			if (hasConnection(i, j, i - 1, j))
 				up = true;
@@ -120,9 +112,3 @@ void Maze::printMaze() {
 		cout << endl;
 	}
 };
-
-Maze::~Maze()
-{
-	for (int i = 0; i < width * height; i++)
-		delete& m_field[i];
-}

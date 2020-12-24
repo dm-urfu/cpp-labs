@@ -9,8 +9,8 @@ private:
 	MCell();
 
 public:
-	bool down();
-	bool right();
+	bool down() const;
+	bool right() const;
 	friend class Maze;
 };
 
